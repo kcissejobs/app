@@ -1,7 +1,7 @@
 package com.behappy.expenseapp.security.user;
 
 import com.behappy.expenseapp.domain.Account;
-import com.behappy.expenseapp.domain.FinancialTransactionType;
+import com.behappy.expenseapp.domain.ExpenseType;
 import com.behappy.expenseapp.domain.Period;
 import com.behappy.expenseapp.security.token.Token;
 import jakarta.persistence.*;
@@ -36,14 +36,18 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Token> tokens;
+
     @OneToMany(mappedBy = "user")
     private List<Account> accounts;
-    @OneToMany(mappedBy = "user")
-    private List<FinancialTransactionType> financialTransactionType;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Period> periods;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<ExpenseType> expenseTypes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

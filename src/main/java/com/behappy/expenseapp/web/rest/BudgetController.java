@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/budget")
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin
 public class BudgetController {
     private final BudgetService budgetService;
 
@@ -46,9 +46,10 @@ public class BudgetController {
         return ResponseEntity.ok(budgetDTO);
     }
 
-    @GetMapping("/findAllBudgets")
-    public ResponseEntity<List<BudgetDTO>> findAllBudgets() {
-        List<BudgetDTO> budgetDTOs = budgetService.getAllBudgets();
+
+    @GetMapping("/findAllBudgets/{accountId}")
+    public ResponseEntity<List<BudgetDTO>> findAllBudgets(@PathVariable Long accountId) {
+        List<BudgetDTO> budgetDTOs = budgetService.getAccountBudgets(accountId);
         return ResponseEntity.ok(budgetDTOs);
     }
 

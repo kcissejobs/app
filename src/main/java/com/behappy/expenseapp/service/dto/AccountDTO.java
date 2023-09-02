@@ -11,5 +11,6 @@ import java.util.List;
 public class AccountDTO {
     @NotNull
     private Long accountId;
+    private Integer userId;
     private List<BudgetDTO> budgetDTOs;
 }

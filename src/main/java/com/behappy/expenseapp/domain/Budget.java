@@ -21,16 +21,35 @@ public class Budget {
     private Long id;
     private String description;
     private double amount;
-
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @NotNull
     @ManyToOne
     private Account account;
+
     @NotNull
     @ManyToOne
     private Period period;
 
-    @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<FinancialTransaction> financialTransactions;
+    @OneToMany(mappedBy = "budget",  fetch = FetchType.LAZY)
+    private List<Expense> expenses;
 
+    public boolean isPending() {
+        return this.status.equals(Status.PENDING);
+    }
+
+    public boolean isFreeze() {
+        return this.status.equals(Status.FREEZE);
+    }
+
+    public boolean isCanceled() {
+        return this.status.equals(Status.CANCEL);
+    }
+
+    public enum Status {
+        PENDING,
+        FREEZE,
+        CANCEL
+    }
 }

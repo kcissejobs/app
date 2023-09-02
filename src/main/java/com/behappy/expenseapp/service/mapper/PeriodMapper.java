@@ -14,6 +14,7 @@ public class PeriodMapper {
                 .id(period.getId())
                 .startDate(period.getStartDate())
                 .endDate(period.getEndDate())
+                .status(period.getStatus())
                 .userId(period.getUser().getId())
                 .build();
     }
@@ -23,6 +24,7 @@ public class PeriodMapper {
                 .id(periodDTO.getId())
                 .startDate(periodDTO.getStartDate())
                 .endDate(periodDTO.getEndDate())
+                .status(periodDTO.getStatus())
                 .user(User.builder().id(periodDTO.getUserId()).build())
                 .build();
     }

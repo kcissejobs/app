@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/period")
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin
 public class PeriodController {
     private final PeriodService periodService;
 

@@ -1,5 +1,6 @@
 package com.behappy.expenseapp.service.dto;
 
+import com.behappy.expenseapp.domain.Period;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class PeriodDTO {
     private Date startDate;
     @NotNull
     private Date endDate;
+    private Period.Status status;
     @NotNull
     private Integer userId;
 }

@@ -2,7 +2,6 @@ package com.behappy.expenseapp.service.mapper;
 
 import com.behappy.expenseapp.domain.Account;
 import com.behappy.expenseapp.domain.Budget;
-import com.behappy.expenseapp.domain.Period;
 import com.behappy.expenseapp.service.dto.BudgetDTO;
 
 import java.util.List;
@@ -12,20 +11,22 @@ public class BudgetMapper {
     public static Budget toEntity(BudgetDTO budgetDTO) {
 
         return Budget.builder()
-                .id(budgetDTO.getIdBudget())
+                .id(budgetDTO.getId())
                 .amount(budgetDTO.getAmount())
                 .description(budgetDTO.getDescription())
-                .period(Period.builder().id(budgetDTO.getPeriodId()).build())
+                .status(budgetDTO.getStatus())
+                .period(PeriodMapper.toEntity(budgetDTO.getPeriodDTO()))
                 .account(Account.builder().id(budgetDTO.getAccountId()).build())
                 .build();
     }
 
     public static BudgetDTO toDTO(Budget budget) {
         return BudgetDTO.builder()
-                .idBudget(budget.getId())
+                .id(budget.getId())
                 .amount(budget.getAmount())
+                .status(budget.getStatus())
                 .description(budget.getDescription())
-                .periodId(budget.getPeriod().getId())
+                .periodDTO(PeriodMapper.toDTO(budget.getPeriod()))
                 .accountId(budget.getAccount().getId())
                 .build();
     }

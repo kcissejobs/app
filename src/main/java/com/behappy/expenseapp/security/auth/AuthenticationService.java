@@ -2,11 +2,11 @@ package com.behappy.expenseapp.security.auth;
 
 
 import com.behappy.expenseapp.security.config.JwtService;
-import com.behappy.expenseapp.security.user.User;
-import com.behappy.expenseapp.security.user.UserRepository;
 import com.behappy.expenseapp.security.token.Token;
 import com.behappy.expenseapp.security.token.TokenRepository;
 import com.behappy.expenseapp.security.token.TokenType;
+import com.behappy.expenseapp.security.user.User;
+import com.behappy.expenseapp.security.user.UserRepository;
 import com.behappy.expenseapp.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,6 +68,10 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .userId(user.getId())
+            .firstName(user.getFirstname())
+            .lastName(user.getLastname())
+            .accountId(user.getAccounts().get(0).getId())
         .build();
   }
 

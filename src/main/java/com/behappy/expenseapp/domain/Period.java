@@ -22,9 +22,18 @@ public class Period {
     private Long id;
     private Date startDate;
     private Date endDate;
-    @OneToMany(mappedBy = "period", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToMany(mappedBy = "period", fetch = FetchType.EAGER)
     private List<Budget> budgets;
     @ManyToOne
     private User user;
+
+    public enum Status {
+        PENDING,
+        OPEN,
+        CLOSE
+    }
 
 }

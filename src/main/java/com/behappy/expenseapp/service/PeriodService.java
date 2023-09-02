@@ -1,6 +1,7 @@
 package com.behappy.expenseapp.service;
 
 import com.behappy.expenseapp.domain.Period;
+import com.behappy.expenseapp.exception.PeriodNotFoundException;
 import com.behappy.expenseapp.repository.PeriodRepository;
 import com.behappy.expenseapp.service.dto.PeriodDTO;
 import com.behappy.expenseapp.service.mapper.PeriodMapper;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -67,6 +69,7 @@ public class PeriodService {
         Period period = optionalPeriod.get();
         period.setStartDate(periodDTO.getStartDate());
         period.setEndDate(periodDTO.getEndDate());
+        period.setStatus(periodDTO.getStatus());
         period = periodRepository.save(period);
 
         return PeriodMapper.toDTO(period);
@@ -94,5 +97,20 @@ public class PeriodService {
 
         return PeriodMapper.toDTO(optionalPeriod.get());
     }
+
+    public List<PeriodDTO> findPeriodOnStatus(Long userId, List<Period.Status> statusList) {
+        log.debug("Request to find Period by Status {}", statusList);
+        List<Period> periods = null;
+
+        periods = periodRepository.findAll()
+                .stream()
+                .filter(period -> statusList == null || statusList.contains(period.getStatus()))
+                .collect(Collectors.toList());
+
+        if(periods == null) return List.of();
+
+        return PeriodMapper.toDTOs(periods);
+    }
+
 
 }
